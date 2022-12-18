@@ -30,5 +30,21 @@ Podaci1$`Data Fields`$lat <- Podaci1$`Data Fields`$lat[888:1992]
 Podaci1$`Data Fields`$lon <- Podaci1$`Data Fields`$lon[0:744]
 
 
+h5createFile("sve_zajedno.h5")
+h5createGroup("sve_zajedno.h5", "19")
+h5createGroup("sve_zajedno.h5", "20")
+h5ls("sve_zajedno.h5")
+
+h5write(Podaci$`Data Fields`, file = "sve_zajedno.h5", name="19/Podaci")
+h5write(Podaci1$`Data Fields`, file = "sve_zajedno.h5", name="20/Podaci" )
+
+k <- h5dump("sve_zajedno.h5")
+
+
+
+
+
+
+
 
 
