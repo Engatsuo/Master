@@ -1,3 +1,5 @@
+start_time <- Sys.time()
+
 library(rhdf5)
 library(arrow)
 library(MESS)
@@ -196,4 +198,10 @@ write.csv(x= parquet_both_change, file = paste0(wd.cur,"/parquet_both_change.csv
 write.csv(x= xml_both_change, file = paste0(wd.cur,"/xml_both_change.csv"), row.names = F)
 write.csv(x= json_both_change, file = paste0(wd.cur,"/json_both_change.csv"), row.names = F)
 write.csv(x= hdf5_both_change, file = paste0(wd.cur,"/hdf5_both_change.csv"), row.names = F)
+
+end_time <- Sys.time()
+
+execution_time <- end_time - start_time
+execution_time <- data.frame(time = execution_time)
+write.csv(execution_time, file = paste0(wd.cur,"/time.csv"), row.names = F)
 
