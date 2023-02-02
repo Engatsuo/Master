@@ -55,31 +55,145 @@ hdf5_creation <- function(column,row, path, group_name, data_name){
 }
 
 
-#H5 Test
-path <- paste0(wd.cur,"/Files/h5_test.h5")
-group <- 'H5test_group'
-data_name <- 'Testing Data'
-h5ls(path)
-hdf5_creation(column = 5, row = 100, path = path, group_name = group, data_name = data_name)
-
-#XML Test
-path <- paste0(wd.cur,"/Files/xml_test.xml")
-xml_creation(column = 5, row = 100, path = path)
-
-#JSON Test
-path <- paste0(wd.cur,"/Files/json.json")
-JSON_creation(column = 5, row = 100, path = path)
-
-#Paruqet Test
-path <- paste0(wd.cur,"/Files/Parquet_Test.parquet")
-parquet_creation
 
 #Fixed number of rows
+#Row number 5Milion
+row <- 5000000
+parquet_fixed_rows <- c()
+json_fixed_rows <- c()
+xml_fixed_rows <- c()
+hdf5_fixed_rows <- c()
 
-for (column in vector) {
+for (column in seq(from = 1, to = 100, by = 1)) {
+  
+  #parquet
+  path <- paste0(wd.cur,"/Files/parquet_fixed_rows",column,".parquet")
+  parquet_creation(column = column, row = row, path = path)
+  parquet_fixed_rows <- rbind (parquet_fixed_rows, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  #xml
+  path <- paste0(wd.cur,"/Files/xml_fixed_rows",column,".xml")
+  xml_creation(column = column, row = row, path = path)
+  xml_fixed_rows <- rbind (xml_fixed_rows, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  #json
+  path <- paste0(wd.cur,"/Files/json_fixed_rows",column,".json")
+  JSON_creation(column = column, row = row, path = path)
+  json_fixed_rows <- rbind (json_fixed_rows, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  #hdf5
+  path <- paste0(wd.cur,"/Files/hdf5_fixed_rows",column,".h5")
+  group <- 'H5_data'
+  data_name <- 'H5_benchmarking_data'
+  hdf5_creation(column = column, row = row, path = path, group_name = group, data_name = data_name)
+  hdf5_fixed_rows <- rbind (hdf5_fixed_rows, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  print(column)
+}
+
+write.csv(x= parquet_fixed_rows, file = paste0(wd.cur,"/parquet_fixed_rows.csv"), row.names = F)
+write.csv(x= xml_fixed_rows, file = paste0(wd.cur,"/xml_fixed_rows.csv"), row.names = F)
+write.csv(x= json_fixed_rows, file = paste0(wd.cur,"/json_fixed_rows.csv"), row.names = F)
+write.csv(x= hdf5_fixed_rows, file = paste0(wd.cur,"/hdf5_fixed_rows.csv"), row.names = F)
+
+
+#------------------------------------------------------------------------------#
+#Fixed Columns
+column <- 50
+i <- 1
+
+parquet_fixed_column <- c()
+json_fixed_column <- c()
+xml_fixed_column <- c()
+hdf5_fixed_column <- c()
+
+for (row in seq(from = 1e+05, to = 1e+07, by = 1e+05)) {
+  
+  #parquet
+  path <- paste0(wd.cur,"/Files/parquet_fixed_column",i,".parquet")
+  parquet_creation(column = column, row = row, path = path)
+  parquet_fixed_column <- rbind (parquet_fixed_column, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  #xml
+  path <- paste0(wd.cur,"/Files/xml_fixed_column",i,".xml")
+  xml_creation(column = column, row = row, path = path)
+  xml_fixed_column <- rbind (xml_fixed_column, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  #json
+  path <- paste0(wd.cur,"/Files/json_fixed_column",i,".json")
+  JSON_creation(column = column, row = row, path = path)
+  json_fixed_column <- rbind (json_fixed_column, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  #hdf5
+  path <- paste0(wd.cur,"/Files/hdf5_fixed_column",i,".h5")
+  group <- 'H5_data'
+  data_name <- 'H5_benchmarking_data'
+  hdf5_creation(column = column, row = row, path = path, group_name = group, data_name = data_name)
+  hdf5_fixed_column <- rbind (hdf5_fixed_column, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  i <- i + 1
+  print(i)
   
 }
 
+write.csv(x= parquet_fixed_column, file = paste0(wd.cur,"/parquet_fixed_column.csv"), row.names = F)
+write.csv(x= xml_fixed_column, file = paste0(wd.cur,"/xml_fixed_column.csv"), row.names = F)
+write.csv(x= json_fixed_column, file = paste0(wd.cur,"/json_fixed_column.csv"), row.names = F)
+write.csv(x= hdf5_fixed_column, file = paste0(wd.cur,"/hdf5_fixed_column.csv"), row.names = F)
 
 
+#------------------------------------------------------------------------------#
+#Both change
+
+z <- data.frame(rows=seq(from = 1e+05, to = 1e+07, by = 1e+05))
+
+parquet_both_change <- c()
+json_both_change <- c()
+xml_both_change <- c()
+hdf5_both_change <- c()
+
+for (column in seq(from = 1, to = 100, by = 1)) {
+  
+  row <- z[column,]
+  #parquet
+  path <- paste0(wd.cur,"/Files/parquet_both_change",column,".parquet")
+  parquet_creation(column = column, row = row, path = path)
+  parquet_both_change <- rbind (parquet_both_change, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  #xml
+  path <- paste0(wd.cur,"/Files/xml_both_change",column,".xml")
+  xml_creation(column = column, row = row, path = path)
+  xml_both_change <- rbind (xml_both_change, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  #json
+  path <- paste0(wd.cur,"/Files/json_both_change",column,".json")
+  JSON_creation(column = column, row = row, path = path)
+  json_both_change <- rbind (json_both_change, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  #hdf5
+  path <- paste0(wd.cur,"/Files/hdf5_both_change",column,".h5")
+  group <- 'H5_data'
+  data_name <- 'H5_benchmarking_data'
+  hdf5_creation(column = column, row = row, path = path, group_name = group, data_name = data_name)
+  hdf5_both_change <- rbind (hdf5_both_change, (file.info(file = path)$size)/1073741824)
+  file.remove(path)
+  
+  print(column)
+}
+
+write.csv(x= parquet_both_change, file = paste0(wd.cur,"/parquet_both_change.csv"), row.names = F)
+write.csv(x= xml_both_change, file = paste0(wd.cur,"/xml_both_change.csv"), row.names = F)
+write.csv(x= json_both_change, file = paste0(wd.cur,"/json_both_change.csv"), row.names = F)
+write.csv(x= hdf5_both_change, file = paste0(wd.cur,"/hdf5_both_change.csv"), row.names = F)
 
