@@ -155,7 +155,7 @@ write.csv(x= hdf5_fixed_column, file = paste0(wd.cur,"/hdf5_fixed_column.csv"), 
 #------------------------------------------------------------------------------#
 #Both change
 
-z <- data.frame(rows=seq(from = 1e+05, to = 1e+07, by = 1e+05))
+z <- data.frame(rows=seq(from = 1e+04, to = 1e+06, by = 1e+04))
 
 parquet_both_change <- c()
 json_both_change <- c()
