@@ -64,7 +64,7 @@ hdf5_fixed_rows <- c()
 
 for (column in seq(from = 1, to = 100, by = 1)) {
   
-  data <-data.frame(replicate(column,sample(x=runif(column*row),size=row,rep=TRUE)))
+  data <-data.frame(replicate(column,sample(x=runif(row),size=row,rep=TRUE)))
   
   #parquet
   path <- paste0(wd.cur,"/Files/parquet_fixed_rows",column,".parquet")
@@ -113,7 +113,7 @@ hdf5_fixed_column <- c()
 
 for (row in seq(from = 1e+04, to = 1e+06, by = 1e+04)) {
   
-  data <-data.frame(replicate(column,sample(x=runif(column*row),size=row,rep=TRUE)))
+  data <-data.frame(replicate(column,sample(x=runif(row),size=row,rep=TRUE)))
   
   #parquet
   path <- paste0(wd.cur,"/Files/parquet_fixed_column",i,".parquet")
@@ -141,8 +141,8 @@ for (row in seq(from = 1e+04, to = 1e+06, by = 1e+04)) {
   hdf5_fixed_column <- rbind (hdf5_fixed_column, (file.info(file = path)$size)/1073741824)
   file.remove(path)
   
-  i <- i + 1
   print(i)
+  i <- i + 1
   
 }
 
@@ -165,7 +165,7 @@ hdf5_both_change <- c()
 for (column in seq(from = 1, to = 100, by = 1)) {
   
   row <- z[column,]
-  data <-data.frame(replicate(column,sample(x=runif(column*row),size=row,rep=TRUE)))
+  data <-data.frame(replicate(column,sample(x=runif(row),size=row,rep=TRUE)))
   
   #parquet
   path <- paste0(wd.cur,"/Files/parquet_both_change",column,".parquet")
