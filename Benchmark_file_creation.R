@@ -11,58 +11,25 @@ wd.cur <- tryCatch(expr = dirname(rstudioapi::getSourceEditorContext()$path),
                    }
 )
 
-#Parquet Function
-parquet_creation <- function(column,row, path, data){
-  
-  outputpath <- path
-  write_parquet(x=data , sink = outputpath)
-  
-}
+wd.functions <- paste0(wd.cur,'/Functions/')
 
-
-#JSON function
-JSON_creation <- function(column,row, path, data){
-  
-  outputpath <- path
-  write(toJSON(data), path)
-  
-}
-
-
-#XML function
-xml_creation <- function(column,row, path, data){
-  
-  outputpath <- path
-  write.xml(data, file = path, collapse = TRUE)  
-  
-}
-
-
-#HF5 function
-hdf5_creation <- function(column,row, path, group_name, data_name, data){
-  
-  #Generate the Data
-  h5createFile(path)
-  h5createGroup(path, group)
-  
-  #Creates the Data
-  outputpath <- path
-  
-  h5write(data, file = path, name= data_name)
-  
-}
+#Loading the functions
+source(paste0(wd.functions,'Creator_HF5.R'))
+source(paste0(wd.functions,'Creator_JSON.R'))
+source(paste0(wd.functions,'Creator_parquet.R'))
+source(paste0(wd.functions,'Creator_xml.R'))
 
 
 
 #Fixed number of rows
-#Row number 500k
-row <- 500000
+#Row number 125k
+row <- 125000
 parquet_fixed_rows <- c()
 json_fixed_rows <- c()
 xml_fixed_rows <- c()
 hdf5_fixed_rows <- c()
 
-for (column in seq(from = 1, to = 100, by = 1)) {
+for (column in seq(from = 1, to = 50, by = 1)) {
   
   data <-data.frame(replicate(column,sample(x=runif(row),size=row,rep=TRUE)))
   
@@ -103,7 +70,7 @@ write.csv(x= hdf5_fixed_rows, file = paste0(wd.cur,"/hdf5_fixed_rows1.csv"), row
 
 #------------------------------------------------------------------------------#
 #Fixed Columns
-column <- 50
+column <- 25
 i <- 1
 
 parquet_fixed_column <- c()
@@ -111,7 +78,7 @@ json_fixed_column <- c()
 xml_fixed_column <- c()
 hdf5_fixed_column <- c()
 
-for (row in seq(from = 1e+04, to = 1e+06, by = 1e+04)) {
+for (row in seq(from = 5000, to = 250000, by = 5000)) {
   
   data <-data.frame(replicate(column,sample(x=runif(row),size=row,rep=TRUE)))
   
@@ -155,14 +122,14 @@ write.csv(x= hdf5_fixed_column, file = paste0(wd.cur,"/hdf5_fixed_column1.csv"),
 #------------------------------------------------------------------------------#
 #Both change
 
-z <- data.frame(rows=seq(from = 1e+04, to = 1e+06, by = 1e+04))
+z <- data.frame(rows=seq(from = 5000, to = 250000, by = 5000))
 
 parquet_both_change <- c()
 json_both_change <- c()
 xml_both_change <- c()
 hdf5_both_change <- c()
 
-for (column in seq(from = 1, to = 100, by = 1)) {
+for (column in seq(from = 1, to = 50, by = 1)) {
   
   row <- z[column,]
   data <-data.frame(replicate(column,sample(x=runif(row),size=row,rep=TRUE)))
