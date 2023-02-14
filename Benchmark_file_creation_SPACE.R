@@ -1,4 +1,4 @@
-start_time <- Sys.time()
+start <- Sys.time()
 options(digits=15)
 library(rhdf5)
 library(arrow)
@@ -62,10 +62,10 @@ for (column in seq(from = 1, to = 50, by = 1)) {
   print(column)
 }
 
-write.csv(x= parquet_fixed_rows, file = paste0(wd.cur,"/parquet_fixed_rows1.csv"), row.names = F)
-write.csv(x= xml_fixed_rows, file = paste0(wd.cur,"/xml_fixed_rows1.csv"), row.names = F)
-write.csv(x= json_fixed_rows, file = paste0(wd.cur,"/json_fixed_rows1.csv"), row.names = F)
-write.csv(x= hdf5_fixed_rows, file = paste0(wd.cur,"/hdf5_fixed_rows1.csv"), row.names = F)
+write.csv(x= parquet_fixed_rows, file = paste0(wd.cur,"/parquet_fixed_rows.csv"), row.names = F)
+write.csv(x= xml_fixed_rows, file = paste0(wd.cur,"/xml_fixed_rows.csv"), row.names = F)
+write.csv(x= json_fixed_rows, file = paste0(wd.cur,"/json_fixed_rows.csv"), row.names = F)
+write.csv(x= hdf5_fixed_rows, file = paste0(wd.cur,"/hdf5_fixed_rows.csv"), row.names = F)
 
 
 #------------------------------------------------------------------------------#
@@ -113,10 +113,10 @@ for (row in seq(from = 5000, to = 250000, by = 5000)) {
   
 }
 
-write.csv(x= parquet_fixed_column, file = paste0(wd.cur,"/parquet_fixed_column1.csv"), row.names = F)
-write.csv(x= xml_fixed_column, file = paste0(wd.cur,"/xml_fixed_column1.csv"), row.names = F)
-write.csv(x= json_fixed_column, file = paste0(wd.cur,"/json_fixed_column1.csv"), row.names = F)
-write.csv(x= hdf5_fixed_column, file = paste0(wd.cur,"/hdf5_fixed_column1.csv"), row.names = F)
+write.csv(x= parquet_fixed_column, file = paste0(wd.cur,"/parquet_fixed_column.csv"), row.names = F)
+write.csv(x= xml_fixed_column, file = paste0(wd.cur,"/xml_fixed_column.csv"), row.names = F)
+write.csv(x= json_fixed_column, file = paste0(wd.cur,"/json_fixed_column.csv"), row.names = F)
+write.csv(x= hdf5_fixed_column, file = paste0(wd.cur,"/hdf5_fixed_column.csv"), row.names = F)
 
 
 #------------------------------------------------------------------------------#
@@ -163,14 +163,14 @@ for (column in seq(from = 1, to = 50, by = 1)) {
   print(column)
 }
 
-write.csv(x= parquet_both_change, file = paste0(wd.cur,"/parquet_both_change1.csv"), row.names = F)
-write.csv(x= xml_both_change, file = paste0(wd.cur,"/xml_both_change1.csv"), row.names = F)
-write.csv(x= json_both_change, file = paste0(wd.cur,"/json_both_change1.csv"), row.names = F)
-write.csv(x= hdf5_both_change, file = paste0(wd.cur,"/hdf5_both_change1.csv"), row.names = F)
+write.csv(x= parquet_both_change, file = paste0(wd.cur,"/parquet_both_change.csv"), row.names = F)
+write.csv(x= xml_both_change, file = paste0(wd.cur,"/xml_both_change.csv"), row.names = F)
+write.csv(x= json_both_change, file = paste0(wd.cur,"/json_both_change.csv"), row.names = F)
+write.csv(x= hdf5_both_change, file = paste0(wd.cur,"/hdf5_both_change.csv"), row.names = F)
 
-end_time <- Sys.time()
+end <- Sys.time()
 
-execution_time <- end_time - start_time
-execution_time <- data.frame(time = execution_time)
-write.csv(execution_time, file = paste0(wd.cur,"/time1.csv"), row.names = F)
+execution <- end - start
+execution <- data.frame(time = execution)
+write.csv(execution, file = paste0(wd.cur,"/time1.csv"), row.names = F)
 
