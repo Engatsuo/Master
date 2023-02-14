@@ -6,8 +6,8 @@ wd.cur <- tryCatch(expr = dirname(rstudioapi::getSourceEditorContext()$path),
                      return(getwd())
                    }
 )
-
-source(paste0(wd.cur,'/HDF5_function.R'))
+wd.functions <- paste0(wd.cur,'/Functions/')
+source(paste0(wd.functions,'/HDF5_function.R'))
 
 file_path1 <- paste0(wd.cur,'/H5_files/VNP46A3.A2022001.h19v04.001.2022076204953.h5') 
 data1 <- "/HDFEOS/GRIDS/VIIRS_Grid_DNB_2d"
