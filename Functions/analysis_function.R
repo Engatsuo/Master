@@ -96,5 +96,24 @@ graph_three_input <- function(data1,data2,data3, line_color = 'black',
   
 }
 
+#Needs 
+#library(ggplot2)
+#library(reshape2)
 
+
+#One Input but 4 different graphs with the same value of Y
+graph_one_input <- function(data, title, subtitle,x_title, y_title, 
+                            output_folder,file_name, dpi = 150, width = 1920, height = 1080) {
+  
+  data_long <- melt(data, id = 'Column')
+  
+  ggplot(data_long, aes(y = value, x = Column, color = variable)) + geom_line() + geom_point() + 
+    ggtitle(title, subtitle) +
+    theme(plot.title = element_text(hjust = 0.5), plot.subtitle = element_text(hjust = 0.5)) + 
+    labs(x=x_title, y=y_title)
+  
+  ggsave(filename = file_name, path = output_folder,device = "png", width = width, 
+         height = height, dpi = dpi, units = "px")
+  
+}
 
