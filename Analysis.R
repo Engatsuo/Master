@@ -1,16 +1,19 @@
+options(encoding = 'UTF-8')
 library(ggplot2)
 library(vroom)
 library(ggpubr)
-
+library(reshape2)
+library(ggrepel)
 wd.cur <- tryCatch(expr = dirname(rstudioapi::getSourceEditorContext()$path),
                    error=function(e){
                      return(getwd())
                    }
 )
+wd.functions <- paste0(wd.cur,'/Functions/')
+source(paste0(wd.functions,'analysis_function.R'))
 
-source(paste0(wd.cur,'/analysis_function.R'))
-
-wd.data <- paste0(wd.cur,'/data')
+wd.data <- paste0(wd.cur,'/Data')
+wd.data_time <- paste0(wd.cur,'/Data_time')
 wd.output <- paste0(wd.cur,'/Rezultati/')
 
 #Fixed Rows
@@ -554,11 +557,169 @@ graph_three_input(data1 = data1, data2 = data2 ,data3 =data3,
 
 
 
+#--------------------------------------------------------------------------------------#
+#Comparison graphs, all curves into one graph
+#Fixed Rows
+hdf5_rows <- vroom(paste0(wd.data,'/hdf5_fixed_rows.csv'), delim = ',')
+xml_rows <- vroom(paste0(wd.data,'/xml_fixed_rows.csv'), delim = ',')
+json_rows <- vroom(paste0(wd.data,'/json_fixed_rows.csv'), delim = ',')
+parquet_rows <- vroom(paste0(wd.data,'/parquet_fixed_rows.csv'), delim = ',')
+
+#Transforming to MB instead of GB
+hdf5_rows <- hdf5_rows*1024
+colnames(hdf5_rows) <- 'Filesize'
+hdf5_rows$Column <- 1:50
+
+xml_rows <- xml_rows*1024
+colnames(xml_rows) <- 'Filesize'
+
+json_rows <- json_rows*1024
+colnames(json_rows) <- 'Filesize'
+
+parquet_rows <- parquet_rows*1024
+colnames(parquet_rows) <- 'Filesize'
+
+#Creating one data frame containing all of the data
+data <- data.frame(Column = hdf5_rows$Column, HDF5 = hdf5_rows$Filesize, XML = xml_rows$Filesize, 
+                   JSON = json_rows$Filesize, PARQUET = parquet_rows$Filesize, row.names = NULL)
+
+title <- 'Promena veličine fajla u zavisnost od broja kolona'
+subtitle <- 'Broj redova fiksiran na 125000'
+y_title <- 'Veličina fajla [MB]'
+x_title <- 'Broj kolona'
+output_folder <- wd.output
+file_name <- '4IN1Fixed_Rows.png'
+
+
+graph_one_input(data = data, title = title, subtitle = subtitle, x_title = x_title, 
+                y_title = y_title, output_folder = output_folder, file_name = file_name)
+
+#Fixed columns
+hdf5_column <- vroom(paste0(wd.data,'/hdf5_fixed_column.csv'), delim = ',')
+xml_column <- vroom(paste0(wd.data,'/xml_fixed_column.csv'), delim = ',')
+json_column <- vroom(paste0(wd.data,'/json_fixed_column.csv'), delim = ',')
+parquet_column <- vroom(paste0(wd.data,'/parquet_fixed_column.csv'), delim = ',')
+
+#Transforming to MB instead of GB
+hdf5_column <- hdf5_column*1024
+colnames(hdf5_column) <- 'Filesize'
+hdf5_column$Column <- seq(from = 5000, to = 250000, by = 5000)
+
+xml_column <- xml_column*1024
+colnames(xml_column) <- 'Filesize'
+
+json_column <- json_column*1024
+colnames(json_column) <- 'Filesize'
+
+parquet_column <- parquet_column*1024
+colnames(parquet_column) <- 'Filesize'
+
+data <- data.frame(Column = hdf5_column$Column, HDF5 = hdf5_column$Filesize, XML = xml_column$Filesize, 
+                   JSON = json_column$Filesize, PARQUET = parquet_column$Filesize, row.names = NULL)
+
+title <- 'Promena veličine fajla u zavisnost od broja redova'
+subtitle <- 'Broj kolona fiksiran na 25'
+y_title <- 'Veličina fajla [MB]'
+x_title <- 'Broj redova'
+output_folder <- wd.output
+file_name <- '4IN1Fixed_Columns.png'
+
+graph_one_input(data = data, title = title, subtitle = subtitle, x_title = x_title, 
+                y_title = y_title, output_folder = output_folder, file_name = file_name)
 
 
 
+#Both change
+hdf5_both <- vroom(paste0(wd.data,'/hdf5_both_change.csv'), delim = ',')
+xml_both <- vroom(paste0(wd.data,'/xml_both_change.csv'), delim = ',')
+json_both <- vroom(paste0(wd.data,'/json_both_change.csv'), delim = ',')
+parquet_both <- vroom(paste0(wd.data,'/parquet_both_change.csv'), delim = ',')
+
+#Transforming to MB instead of GB
+hdf5_both <- hdf5_both*1024
+colnames(hdf5_both) <- 'Filesize'
+hdf5_both$Column <- 1:50
+
+xml_both <- xml_both*1024
+colnames(xml_both) <- 'Filesize'
+
+json_both <- json_both*1024
+colnames(json_both) <- 'Filesize'
+
+parquet_both <- parquet_both*1024
+colnames(parquet_both) <- 'Filesize'
+
+data <- data.frame(Column = hdf5_both$Column, HDF5 = hdf5_both$Filesize, XML = xml_both$Filesize, 
+                   JSON = json_both$Filesize, PARQUET = parquet_both$Filesize, row.names = NULL)
+
+title <- 'Promena veličine fajla u zavisnost od broja redova i kolona'
+subtitle <- 'Oba se menjaju'
+y_title <- 'Veličina fajla [MB]'
+x_title <- 'Broj kolona/redova'
+output_folder <- wd.output
+file_name <- '4IN1Fixed_BothChange.png'
+
+graph_one_input(data = data, title = title, subtitle = subtitle, x_title = x_title, 
+                y_title = y_title, output_folder = output_folder, file_name = file_name)
 
 
+#Speed testing
+#Fixed Rows
+hdf5_rows <- vroom(paste0(wd.data_time,'/hdf5_fixed_rows_time.csv'), delim = ',')
+xml_rows <- vroom(paste0(wd.data_time,'/xml_fixed_rows_time.csv'), delim = ',')
+json_rows <- vroom(paste0(wd.data_time,'/json_fixed_rows_time.csv'), delim = ',')
+parquet_rows <- vroom(paste0(wd.data_time,'/parquet_fixed_rows_time.csv'), delim = ',')
 
 
+data <- data.frame(Column = seq(from = 5, to = 50, by = 5), HDF5 = hdf5_rows$elapsed, XML = xml_rows$elapsed, 
+                   JSON = json_rows$elapsed, PARQUET = parquet_rows$elapsed, row.names = NULL)
+
+title <- 'Brzina pisanja fajlova u zavisnost od broja kolona'
+subtitle <- 'Broj redova fiksiran na 125000'
+y_title <- 'Vreme [s]'
+x_title <- 'Broj kolona'
+output_folder <- wd.output
+file_name <- 'Time4IN1Fixed_Rows.png'
+
+graph_one_input(data = data, title = title, subtitle = subtitle, x_title = x_title, 
+                y_title = y_title, output_folder = output_folder, file_name = file_name)
+
+#Fixed columns
+hdf5_column <- vroom(paste0(wd.data_time,'/hdf5_fixed_column_time.csv'), delim = ',')
+xml_column <- vroom(paste0(wd.data_time,'/xml_fixed_column_time.csv'), delim = ',')
+json_column <- vroom(paste0(wd.data_time,'/json_fixed_column_time.csv'), delim = ',')
+parquet_column <- vroom(paste0(wd.data_time,'/parquet_fixed_column_time.csv'), delim = ',')
+
+data <- data.frame(Column = seq(from = 25000, to = 250000, by = 25000), HDF5 = hdf5_column$elapsed, XML = xml_column$elapsed, 
+                   JSON = json_column$elapsed, PARQUET = parquet_column$elapsed, row.names = NULL)
+
+title <- 'Brzina pisanja fajlova u zavisnost od broja redova'
+subtitle <- 'Broj kolona fiksiran na 25'
+y_title <- 'Vreme [s]'
+x_title <- 'Broj redova'
+output_folder <- wd.output
+file_name <- 'Time4IN1Fixed_Columns.png'
+
+graph_one_input(data = data, title = title, subtitle = subtitle, x_title = x_title, 
+                y_title = y_title, output_folder = output_folder, file_name = file_name)
+
+
+#Both change
+hdf5_both <- vroom(paste0(wd.data_time,'/hdf5_both_change_time.csv'), delim = ',')
+xml_both <- vroom(paste0(wd.data_time,'/xml_both_change_time.csv'), delim = ',')
+json_both <- vroom(paste0(wd.data_time,'/json_both_change_time.csv'), delim = ',')
+parquet_both <- vroom(paste0(wd.data_time,'/parquet_both_change_time.csv'), delim = ',')
+
+data <- data.frame(Column = seq(from = 5, to = 50, by = 5), HDF5 = hdf5_both$elapsed, XML = xml_both$elapsed, 
+                   JSON = json_both$elapsed, PARQUET = parquet_both$elapsed, row.names = NULL)
+
+title <- 'Brzina pisanja fajlova u zavisnost od broja redova i kolona'
+subtitle <- 'Oba se menjaju'
+y_title <- 'Vreme [s]'
+x_title <- 'Broj kolona/redova'
+output_folder <- wd.output
+file_name <- 'Time4IN1Fixed_BothChange.png'
+
+graph_one_input(data = data, title = title, subtitle = subtitle, x_title = x_title, 
+                y_title = y_title, output_folder = output_folder, file_name = file_name)
 
