@@ -123,6 +123,7 @@ write.csv(x= hdf5_fixed_column, file = paste0(wd.cur,"/hdf5_fixed_column_time.cs
 
 z <- data.frame(rows=seq(from = 25000, to = 250000, by = 25000))
 
+i=1
 parquet_both_change <- c()
 json_both_change <- c()
 xml_both_change <- c()
@@ -130,7 +131,8 @@ hdf5_both_change <- c()
 
 for (column in seq(from = 5, to = 50, by = 5)) {
   
-  row <- z[column,]
+  
+  row <- z[i,]
   data <-data.frame(replicate(column,sample(x=runif(row),size=row,rep=TRUE)))
   
   #parquet
@@ -159,7 +161,8 @@ for (column in seq(from = 5, to = 50, by = 5)) {
   hdf5_both_change <- rbind (hdf5_both_change, time)
   file.remove(path)
   
-  print(column)
+  print(i)
+  i = i + 1
 }
 
 write.csv(x= parquet_both_change, file = paste0(wd.cur,"/parquet_both_change_time.csv"), row.names = F)
