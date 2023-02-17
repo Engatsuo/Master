@@ -1,8 +1,9 @@
-#File write
-library(data.table)
-library(rhdf5)
-library(tidyr)
-library(magrittr)
+#Pisanje fajla
+#Potrebne biblioteke za pokretanje funkcije
+#library(data.table)
+#library(rhdf5)
+#library(tidyr)
+#library(magrittr)
 
 h5_lookup <- function(file_path, output_path = NULL, file_name = NULL){
   
