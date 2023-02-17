@@ -86,6 +86,8 @@ hdf5_2file_transformer <- function(file_path1, data1, file_path2, data2, rows1, 
 }
 
 
+
+#Funkcija za spajanje u jedan
 #Spaja vise fajlova u jedan kompaktan h5 fajl koji sadrzi sve ulazne fajlove sortirane po grupama
 hdf5_file_combiner <- function(file_list, folder_location, output_file_name){
   
