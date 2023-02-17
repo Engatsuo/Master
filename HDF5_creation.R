@@ -31,16 +31,23 @@ for (i in 1:(length(file_list)/2)) {
   columns2 <- 0:744
   
   output_file_name <- paste0(wd.cur,'/LaadsDac_rezultati/',months[i],'2022.h5')
-  output_file_groupname <- months[i]
-  output_file_dataname <- paste0(months[i],'2022')
+  output_file_groupname <- paste0(months[i],'2022')
   
   hdf5_2file_transformer(file_path1 = file_path1, file_path2 = file_path2, data1 = data1, data2 = data2,
                          rows1 = rows1, rows2 = rows2, columns1 = columns1, columns2 = columns2,
-                         output_file_name = output_file_name, output_file_groupname = output_file_groupname, output_file_dataname = output_file_dataname)
+                         output_file_name = output_file_name, output_file_groupname = output_file_groupname)
   
   
 }
 
+
+#Sada spajam 12 rezultujucih u jedan kompaktan
+folder_location <- paste0(wd.cur,'/LaadsDac_rezultati')
+#Ucita listu sa fajlovima iz foldera
+file_list <- list.files(folder_location)
+output_file_name <- paste0(wd.cur,'/LaadsDac_rezultatiSveSpojeno/2022Srbija.h5')
+
+hdf5_file_combiner(file_list = file_list, output_file_name = output_file_name, folder_location = folder_location)
 
 
 
