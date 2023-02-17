@@ -33,7 +33,7 @@ h5_lookup <- function(file_path, output_path = NULL, file_name = NULL){
 #Ova funkcija koristi se konkretno na LAADS dac problemu, zato je struktuirana oko tih podataka
 
 hdf5_2file_transformer <- function(file_path1, data1, file_path2, data2, rows1, columns1, rows2, columns2,
-                                   output_file_name, output_file_groupname, output_file_dataname) {
+                                   output_file_name, output_file_groupname) {
   
   #Učitava se prvi fajl
   data1 <- h5read(file_path1,data1,
@@ -79,15 +79,29 @@ hdf5_2file_transformer <- function(file_path1, data1, file_path2, data2, rows1, 
   rm(data2)
   
   h5createFile(file = output_file_name)
-  h5createGroup(file = output_file_name, group = output_file_groupname)
-  h5write(data1, file = output_file_name, name= paste0(output_file_groupname,'/',output_file_dataname))
+
+  h5write(data1, file = output_file_name, name= output_file_groupname)
   
   
 }
 
 
-
-
+#Spaja vise fajlova u jedan kompaktan h5 fajl koji sadrzi sve ulazne fajlove sortirane po grupama
+hdf5_file_combiner <- function(file_list, folder_location, output_file_name){
+  
+  h5createFile(file = output_file_name)
+  
+  for (i in 1:length(file_list)) {
+    
+    file_location <- paste0(folder_location,'/',file_list[i])
+    data_name = paste0('/',substr(file_list[i],1,nchar(file_list[i])-3),'/Data Fields')
+    
+    k <- h5read(file = file_location, name = data_name)
+    h5write(k, file = output_file_name, name= file_list[i])
+    
+  }
+  
+}
 
 
 
