@@ -21,4 +21,4 @@ The benchmarking data size was determined according to the hardware constraints 
 
 #Thesis
 The complete Master's Thesis is accessible in Serbian within the .pdf file:
-**Razvoj alata za obrade hijerarhijski organizovanih kolekcija tabelarnih podataka
+**Razvoj alata za obrade hijerarhijski organizovanih kolekcija tabelarnih podataka**
