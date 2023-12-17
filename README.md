@@ -10,7 +10,7 @@ The data utilized in the second segment originates from:
 
 The data extracted spanned the entire year of 2022, derived specifically from files labeled as 'h19v04' and 'h20v04'. This data was chosen due to its coverage of the geographical region corresponding to the Republic of Serbia.
 
-## Directory Structure:
+## Directory Structure
 - Benchmarking: Includes the procedures for benchmarking write time and file size.
 - H5_Creation: Encompasses the process of extracting data from existing .h5 files and merging them together.
 - Functions: Comprises functions developed to streamline the benchmarking and creation processes.
