@@ -1,7 +1,7 @@
 # Master Analysis
 
 This project, housed within my Git repository, encompasses all the code utilized for my Master's thesis, under the title:
-**DEVELOPMENT OF PROCESSING TOOLS HIERARCHICALLY ORGANIZED COLLECTION OF TABULAR DATA**
+**DEVELOPMENT OF PROCESSING TOOLS FOR HIERARCHICALLY ORGANIZED COLLECTION OF TABULAR DATA**
 
 This project consists of two parts. The first involves benchmarking various data types, assessing their write speed and file size, aiming to identify the most suitable option for scientific data storage. The second part focuses on testing the feasibility of extracting specifically required data from pre-existing .H5 files, consolidating this data into a single compact file.
 
@@ -16,5 +16,10 @@ The data extracted spanned the entire year of 2022, derived specifically from fi
 - Functions: Comprises functions developed to streamline the benchmarking and creation processes.
 - Docker: Holds the Dockerfile and docker-compose file utilized for setting up the environment.
 
+##Reminder
+The benchmarking data size was determined according to the hardware constraints of my machine during that particular period.
 
+#Thesis
+The complete Master's Thesis is accessible in Serbian within the PDF file:
+[Razvoj alata za obrade hijerarhijski organizovanih kolekcija tabelarnih podataka](Razvoj alata za obrade hijerarhijski organizovanih kolekcija tabelarnih podataka.pdf)
 
