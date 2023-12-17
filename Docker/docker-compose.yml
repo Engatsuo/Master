@@ -1,0 +1,11 @@
+version: '3.6'
+
+services:
+  r-base:
+    container_name: Master_analysis
+    image: master_analysis:r-4.2.2
+    working_dir: "/opt/Master-analysis"
+    command: "r /opt/LibraryInstall.R"
+    volumes:
+      - ./:/opt/Master_analysis
+      - ./buildDocker/LibraryInstall.R:/opt/LibraryInstall.R
