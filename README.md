@@ -16,9 +16,9 @@ The data extracted spanned the entire year of 2022, derived specifically from fi
 - Functions: Comprises functions developed to streamline the benchmarking and creation processes.
 - Docker: Holds the Dockerfile and docker-compose file utilized for setting up the environment.
 
-##Reminder
+## Reminder
 The benchmarking data size was determined according to the hardware constraints of my machine during that particular period.
 
-#Thesis
-The complete Master's Thesis is accessible in Serbian within the .pdf file:
+# Thesis
+The complete Master's Thesis is accessible in Serbian within the .pdf file:<br>
 **Razvoj alata za obrade hijerarhijski organizovanih kolekcija tabelarnih podataka**
