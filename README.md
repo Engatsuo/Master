@@ -1,6 +1,6 @@
 # Master Analysis
 
-This project, housed within my Git repository, encompasses all the code utilized for my Master's thesis, under the title:
+This project, housed within my Git repository, encompasses all the code utilized for my Master's thesis, under the title:<br>
 **DEVELOPMENT OF PROCESSING TOOLS FOR HIERARCHICALLY ORGANIZED COLLECTION OF TABULAR DATA**
 
 This project consists of two parts. The first involves benchmarking various data types, assessing their write speed and file size, aiming to identify the most suitable option for scientific data storage. The second part focuses on testing the feasibility of extracting specifically required data from pre-existing .H5 files, consolidating this data into a single compact file.
