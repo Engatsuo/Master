@@ -11,7 +11,8 @@ wd.cur <- tryCatch(expr = dirname(rstudioapi::getSourceEditorContext()$path),
                    }
 )
 
-wd.functions <- paste0(wd.cur,'/Functions/')
+wd.parent <- dirname(wd.cur)
+wd.functions <- paste0(wd.parent,'/Functions/')
 
 #Loading the functions
 source(paste0(wd.functions,'Creator_HF5.R'))
