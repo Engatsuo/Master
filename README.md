@@ -20,6 +20,5 @@ The data extracted spanned the entire year of 2022, derived specifically from fi
 The benchmarking data size was determined according to the hardware constraints of my machine during that particular period.
 
 #Thesis
-The complete Master's Thesis is accessible in Serbian within the PDF file:
-[Razvoj alata za obrade hijerarhijski organizovanih kolekcija tabelarnih podataka](Razvoj alata za obrade hijerarhijski organizovanih kolekcija tabelarnih podataka.pdf)
-
+The complete Master's Thesis is accessible in Serbian within the .pdf file:
+**Razvoj alata za obrade hijerarhijski organizovanih kolekcija tabelarnih podataka
